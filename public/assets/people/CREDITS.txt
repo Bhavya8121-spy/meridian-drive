@@ -1,0 +1,5 @@
+Quaternius, Ultimate Modular Men and Ultimate Modular Women, CC0 1.0.
+https://quaternius.com/packs/ultimatemodularcharacters.html
+https://quaternius.com/
+GLB exports sourced from https://github.com/LuanDucate/Ducz.CharacterCreator .
+Modified to retain the idle and walk animation clips and remove unused buffers.

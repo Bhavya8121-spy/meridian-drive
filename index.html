@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meridian Drive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/ui/style.css" />
+</head>
+<body>
+  <canvas id="view"></canvas>
+
+  <div id="loading" class="screen">
+    <div class="brand"><span>MERIDIAN</span><small>DRIVE</small></div>
+    <div class="bar"><i id="load-bar"></i></div>
+    <div id="load-text">Starting…</div>
+  </div>
+
+  <div id="hud" hidden>
+    <div class="hud-tl">
+      <div id="hud-district">Downtown Meridian</div>
+      <div class="hud-sub"><span id="hud-clock">17:20</span><span class="dot">·</span><span id="hud-weather">Clear</span></div>
+    </div>
+    <div class="hud-tr">
+      <span class="chip" id="chip-mode">Balanced</span>
+      <span class="chip" id="chip-cam">Chase</span>
+      <span class="chip warn" id="chip-tcs">TCS</span>
+      <span class="chip warn" id="chip-abs">ABS</span>
+      <span class="chip info" id="chip-lights">LIGHTS</span>
+    </div>
+    <div id="minimap"><canvas width="220" height="220"></canvas><div class="north">N</div></div>
+    <div id="drive-status">
+      <div id="hud-wallet"></div>
+      <div id="hud-reserve"></div>
+      <div id="hud-energy"></div>
+    </div>
+    <div id="speed-limit" aria-label="Speed limit"><span id="speed-limit-value">80</span></div>
+    <div id="cluster">
+      <svg viewBox="0 0 260 260" class="tach">
+        <defs>
+          <linearGradient id="g-rpm" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#7dd3fc" />
+            <stop offset="0.7" stop-color="#f8fafc" />
+            <stop offset="1" stop-color="#ff5a36" />
+          </linearGradient>
+        </defs>
+        <path id="tach-track" d="" />
+        <path id="tach-red" d="" />
+        <path id="tach-fill" d="" />
+        <g id="tach-ticks"></g>
+      </svg>
+      <div class="readout">
+        <div id="gear">N</div>
+        <div id="speed">0</div>
+        <div id="unit">KM/H</div>
+      </div>
+      <div id="shift-light"></div>
+    </div>
+    <div id="condition"><label>CONDITION</label><div class="cbar"><i id="cond-fill"></i></div><span id="cond-val">100%</span></div>
+    <div id="toast"></div>
+    <div id="hint">W/S drive · A/D steer · Space handbrake · C camera · P phone · G garage · F service · Esc menu</div>
+    <pre id="debug" hidden></pre>
+  </div>
+
+  <div id="menu-main" class="screen menu" hidden>
+    <div class="menu-left">
+      <div class="brand big"><span>MERIDIAN</span><small>DRIVE</small></div>
+      <p class="tag">Start a ride-hailing shift</p>
+      <nav>
+        <button data-act="drive" class="primary">Drive</button>
+        <button data-act="settings">Settings</button>
+        <button data-act="controls">Controls</button>
+      </nav>
+      <div class="paint">
+        <label>Paint</label>
+        <div id="swatches"></div>
+      </div>
+      <div class="quick">
+        <label>Preview lighting <select id="q-time"><option value="7">Sunrise</option><option value="12.5">Midday</option><option value="17.6">Sunset</option><option value="22">Night</option></select></label>
+        <label>Weather <select id="q-weather"><option value="clear">Clear</option><option value="cloudy">Cloudy</option><option value="rain">Rain</option><option value="fog">Fog</option></select></label>
+      </div>
+      <p class="credits">Car models by <a href="https://sketchfab.com/DanielZhabotinsky" target="_blank" rel="noopener">Daniel Zhabotinsky</a> (<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, modified) · textures and HDRIs: <a href="https://polyhaven.com" target="_blank" rel="noopener">Poly Haven</a> (CC0)</p>
+    </div>
+  </div>
+
+  <div id="menu-pause" class="screen menu dim" hidden>
+    <div class="panel narrow">
+      <h2>Paused</h2>
+      <nav>
+        <button data-act="resume" class="primary">Resume</button>
+        <button data-act="reset">Reset Vehicle</button>
+        <button data-act="settings">Settings</button>
+        <button data-act="controls">Controls</button>
+        <button data-act="quit">Main Menu</button>
+      </nav>
+    </div>
+  </div>
+
+  <div id="menu-settings" class="screen menu dim" hidden>
+    <div class="panel wide">
+      <h2>Settings</h2>
+      <div class="tabs" id="set-tabs"></div>
+      <div class="tab-body" id="set-body"></div>
+      <div class="panel-foot"><button data-act="back" class="primary">Done</button></div>
+    </div>
+  </div>
+
+  <div id="menu-controls" class="screen menu dim" hidden>
+    <div class="panel wide">
+      <h2>Controls</h2>
+      <table class="keys">
+        <tr><th>Action</th><th>Keyboard</th><th>Gamepad</th></tr>
+        <tr><td>Accelerate</td><td>W / ↑</td><td>RT</td></tr>
+        <tr><td>Brake / Reverse</td><td>S / ↓</td><td>LT</td></tr>
+        <tr><td>Steer</td><td>A D / ← →</td><td>Left stick</td></tr>
+        <tr><td>Handbrake</td><td>Space</td><td>A</td></tr>
+        <tr><td>Change camera</td><td>C</td><td>Y</td></tr>
+        <tr><td>Cinematic view</td><td>V</td><td>RB</td></tr>
+        <tr><td>Headlights</td><td>L</td><td>X</td></tr>
+        <tr><td>Horn</td><td>H</td><td>B</td></tr>
+        <tr><td>Indicators / hazards</td><td>Q / E / Z</td><td>—</td></tr>
+        <tr><td>Reset vehicle</td><td>R</td><td>Back</td></tr>
+        <tr><td>Look around</td><td>Drag mouse</td><td>Right stick</td></tr>
+        <tr><td>Accept / decline ride</td><td>1 / 2</td><td>—</td></tr>
+        <tr><td>Driver phone</td><td>P</td><td>—</td></tr>
+        <tr><td>Garage</td><td>G</td><td>—</td></tr>
+        <tr><td>Refuel or sleep at a stop</td><td>F</td><td>—</td></tr>
+        <tr><td>Pause menu</td><td>Esc</td><td>Start</td></tr>
+        <tr><td>Performance overlay</td><td>F3</td><td>—</td></tr>
+      </table>
+      <div class="panel-foot"><button data-act="back" class="primary">Back</button></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

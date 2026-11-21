@@ -1,0 +1,16 @@
+Car models by Daniel Zhabotinsky (https://sketchfab.com/DanielZhabotinsky), licensed under
+Creative Commons Attribution 4.0 (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/).
+The author also states on each model page that the models may be used and modified in digital products.
+
+  Canyon '75 Taxi - Low poly model            https://sketchfab.com/3d-models/9e8f92a215784f3d8aaaaeab1bef54c4
+  Kiri '86 - Low poly model                   https://sketchfab.com/3d-models/5c17c582ef9549798f694b660feea42a
+  Fairheaven LT '80 - Low poly model          https://sketchfab.com/3d-models/e2678da920cc4be68dbc193727919ffb
+  Riverside '88 - Low poly model              https://sketchfab.com/3d-models/8509a7f82665442592627940b7a1cfab
+  Fairheaven SW '84 - Low poly model          https://sketchfab.com/3d-models/aa0becb6e854422596cac6b21bf79787
+  Shvan '92 - Low poly model                  https://sketchfab.com/3d-models/09d718c9cf72401b8534d265a06a803f
+  LCT 3000 '07 - Low poly model               https://sketchfab.com/3d-models/3be03b6a43aa41898c9ca806b8787052
+  Fairheaven LT '80 Cop Cruiser - Low poly    https://sketchfab.com/3d-models/61766c1e6e1e4b2b803c174f33433a74
+
+Changes made for Meridian Drive: textures converted to WebP (max 1024 px) and shared between models;
+a simplified traffic version (<key>_lod.gltf) was generated with meshoptimizer, without interiors,
+suspension and badges; models are re-oriented and split into material groups at load time.

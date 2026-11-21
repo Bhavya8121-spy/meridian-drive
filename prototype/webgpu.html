@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- asset URLs in the game code are relative to the site root ('assets/cars/...') -->
+  <base href="/" />
+  <title>WebGPU prototype</title>
+  <style>
+    :root { color-scheme: dark; --bg: #121417; --fg: #d9dde2; --mut: #8b929b; --line: #2a2f36; --acc: #7fb4ff; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    header { padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+    header b { color: var(--acc); }
+    #status { color: var(--mut); }
+    .views { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 16px; }
+    .views figure { margin: 0; }
+    .views canvas { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; }
+    .views figcaption { color: var(--mut); padding: 4px 0; }
+    #game { width: 800px; height: 450px; border: 0; display: none; }
+    body.game #game { display: block; margin: 0 16px; }
+    table { border-collapse: collapse; margin: 8px 16px 24px; }
+    th, td { padding: 3px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--mut); font-weight: normal; }
+    button { font: inherit; background: #1d2228; color: var(--fg); border: 1px solid var(--line); padding: 3px 10px; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <b>Meridian Drive · WebGL vs WebGPU prototype</b>
+    <span id="status">loading…</span>
+    <span>
+      <button id="run">Run bench</button>
+      <button id="runPost">Run bench + post</button>
+      <button id="play">Play path</button>
+    </span>
+  </header>
+  <div class="views">
+    <figure><canvas id="cgl"></canvas><figcaption>WebGLRenderer (classic, GLSL onBeforeCompile facade)</figcaption></figure>
+    <figure><canvas id="cgpu"></canvas><figcaption>WebGPURenderer (TSL facade)</figcaption></figure>
+  </div>
+  <iframe id="game" title="game"></iframe>
+  <table id="results"></table>
+  <script type="module" src="/prototype/webgpu.js"></script>
+</body>
+</html>

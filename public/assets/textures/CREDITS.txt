@@ -1,0 +1,15 @@
+Photo-scanned textures and HDRIs in this folder are from Poly Haven (https://polyhaven.com),
+released under CC0 1.0 (public domain). Attribution is not required; listed here for provenance.
+Files were downloaded at 1K/2K and recompressed (normals and roughness resized to 1024 px).
+
+Textures (colour _col, OpenGL normal _nor, roughness _rough):
+  asphalt_02               https://polyhaven.com/a/asphalt_02               roads, highway
+  concrete_pavement        https://polyhaven.com/a/concrete_pavement        sidewalk slabs
+  concrete_floor_worn_001  https://polyhaven.com/a/concrete_floor_worn_001  curbs, yards, barriers, tunnel, bridges
+  red_brick                https://polyhaven.com/a/red_brick                brick facades (luminance, tinted per building)
+  leafy_grass              https://polyhaven.com/a/leafy_grass              lawns and parks
+  bark_brown_02            https://polyhaven.com/a/bark_brown_02            street-tree bark
+
+HDRIs (1K, blended below the horizon into the reflection capture):
+  urban_street_04          https://polyhaven.com/a/urban_street_04          day
+  hansaplatz               https://polyhaven.com/a/hansaplatz               night
